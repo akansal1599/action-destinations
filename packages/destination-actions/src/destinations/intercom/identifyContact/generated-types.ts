@@ -40,11 +40,15 @@ export interface Payload {
   /**
    * The contact's email unsubscribe status.
    */
-  unsubscribed_from_emails?: boolean
+  unsubscribed_from_emails: boolean
   /**
    * The custom attributes which are set for the contact. You can only write to custom attributes that already exist in your Intercom workspace. Please ensure custom attributes are created in Intercom first. See [Intercom documentation](https://developers.intercom.com/intercom-api-reference/reference/create-data-attributes) for more information on creating attributes.
    */
-  custom_attributes?: {
+  custom_attributes: {
     [k: string]: unknown
   }
+  /**
+   * new description
+   */
+  new_attribute?: string
 }
