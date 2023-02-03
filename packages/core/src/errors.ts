@@ -46,10 +46,12 @@ type RetryableStatusCodes =
  */
 export class RetryableError extends CustomError {
   status: RetryableStatusCodes
+  code: string | undefined
 
   constructor(message = '', status: RetryableStatusCodes = 500) {
     super(message)
     this.status = status
+    this.code = ErrorCodes.RETRYABLE_ERROR
   }
 }
 
@@ -62,9 +64,52 @@ export class RetryableError extends CustomError {
  */
 export class InvalidAuthenticationError extends CustomError {
   status = 401
-  code = 'invalid_authentication'
+  code = ErrorCodes.INVALID_AUTHENTICATION
 
   constructor(message = '') {
     super(message)
   }
+}
+
+/**
+ * Error for invalid field values
+ * Should include a user-friendly message.
+ * These errors will not be retried and the user has to fix the incorrect field mapping
+ */
+export class FieldValidationError extends IntegrationError {
+  /**
+   * @param message - a human-friendly message to display to users
+   * @param code - an optional error code/reason
+   * @param status - an optional http status code (e.g. 400)
+   */
+  constructor(message = '') {
+    super(message, ErrorCodes.VALIDATION_ERROR, 400)
+  }
+}
+
+/**
+ * Error for misconfiguration of settings
+ * Should include a user-friendly message.
+ * These errors will not be retried and the user has to fix the incorrect setting for future events to succeed
+ */
+export class SettingsValidationError extends IntegrationError {
+  /**
+   * @param message - a human-friendly message to display to users
+   * @param code - an optional error code/reason
+   * @param status - an optional http status code (e.g. 400)
+   */
+  constructor(message = '') {
+    super(message, ErrorCodes.SETTINGS_VALIDATION_ERROR, 400)
+  }
+}
+/**
+ * Standard error codes. Use one from this enum whenever possible
+ */
+export enum ErrorCodes {
+  INVALID_AUTHENTICATION = 'INVALID_AUTHENTICATION',
+  VALIDATION_ERROR = 'VALIDATION_ERROR',
+  SETTINGS_VALIDATION_ERROR = 'SETTINGS_VALIDATION_ERROR',
+  RETRYABLE_ERROR = 'RETRYABLE_ERROR',
+  REFRESH_TOKEN_EXPIRED = 'REFRESH_TOKEN_EXPIRED',
+  OAUTH_REFRESH_FAILED = 'OAUTH_REFRESH_FAILED'
 }

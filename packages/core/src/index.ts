@@ -4,7 +4,14 @@ export { transform } from './mapping-kit'
 export { createTestEvent } from './create-test-event'
 export { createTestIntegration } from './create-test-integration'
 export { defaultValues } from './defaults'
-export { IntegrationError, InvalidAuthenticationError, RetryableError } from './errors'
+export {
+  IntegrationError,
+  InvalidAuthenticationError,
+  RetryableError,
+  SettingsValidationError,
+  FieldValidationError,
+  ErrorCodes
+} from './errors'
 export { get } from './get'
 export { omit } from './omit'
 export { removeUndefined } from './remove-undefined'
